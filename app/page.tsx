@@ -1,77 +1,46 @@
-export default function Home() {
+import Card from '@/components/Card'
+
+export default function Projects() {
+  const dummyData = [
+    {
+      title: '스타벅스 쿠폰',
+      description: `XX은행에서 발급받은 쿠폰`,
+      imgSrc: 'https://i.namu.wiki/i/9p8OVxJTce_f2HnuZF1QOU6qMSHqXBHdkcx3q_hlGxvhcyaOXKxBVyoDkeg-Cb4Nx2p60W0AUh6RzjAH59vHwQ.svg',
+      href: 'https://namu.wiki/w/%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4',
+    },
+    {
+      title: '투썸플레이스 쿠폰',
+      description: `XX대학교 행사`,
+      imgSrc: 'https://i.namu.wiki/i/0m7UBgRqRjORses_DJGH-I47-etuhyyHEMsvW9K722NR4KQSaXvqBE94utIr7COkdvqiiFAm3jgYBT2Qejt9FA.svg',
+      href: 'https://namu.wiki/w/%ED%88%AC%EC%8D%B8%ED%94%8C%EB%A0%88%EC%9D%B4%EC%8A%A4',
+    },
+  ]
+
   return (
     <>
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
-          className="mx-auto h-10 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-          alt="Your Company"
-        />
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          Sign in to your account
-        </h2>
-      </div>
-
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" action="#" method="POST">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-              Email address
-            </label>
-            <div className="mt-2">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+      <div className="divide-y divide-gray-200 dark:divide-gray-700">
+        <div className="space-y-2 pb-8 pt-6 md:space-y-5">
+          <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
+            쿠폰함
+          </h1>
+          <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
+            쿠폰의 사용을 체크하세요.
+          </p>
+        </div>
+        <div className="container py-12">
+          <div className="-m-4 flex flex-wrap">
+            {dummyData.map((d) => (
+              <Card
+                key={d.title}
+                title={d.title}
+                description={d.description}
+                imgSrc={d.imgSrc}
+                href={d.href}
               />
-            </div>
+            ))}
           </div>
-
-          <div>
-            <div className="flex items-center justify-between">
-              <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                Password
-              </label>
-              <div className="text-sm">
-                <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                  Forgot password?
-                </a>
-              </div>
-            </div>
-            <div className="mt-2">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Sign in
-            </button>
-          </div>
-        </form>
-
-        <p className="mt-10 text-center text-sm text-gray-500">
-          Not a member?{' '}
-          <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-            Start a 14 day free trial
-          </a>
-        </p>
+        </div>
       </div>
-    </div>
-  </>
+    </>
   )
 }
