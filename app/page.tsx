@@ -1,6 +1,7 @@
 import Card from '@/components/Card'
+import { queryCoupons } from './api/notion/queryCoupons'
 
-export default function Projects() {
+export default async function Projects() {
   const dummyData = [
     {
       title: '스타벅스 쿠폰',
@@ -16,6 +17,10 @@ export default function Projects() {
     },
   ]
 
+  const couponsResponse = await queryCoupons()
+  
+  console.log(couponsResponse.results[0].properties)
+
   return (
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -29,15 +34,17 @@ export default function Projects() {
         </div>
         <div className="container py-12">
           <div className="-m-4 flex flex-wrap">
-            {dummyData.map((d) => (
-              <Card
-                key={d.title}
-                title={d.title}
-                description={d.description}
-                imgSrc={d.imgSrc}
-                href={d.href}
-              />
-            ))}
+            {
+              couponsResponse.results.map((result) => (
+                <Card
+                key={result.id}
+                title={result.properties.name.title[0].plain_text}
+                description={result.properties.name.title[0].plain_text}
+                imgSrc={result.properties.image.files[0].file.url}
+                href={result.properties.image.files[0].file.url}
+                />
+              ))
+            }
           </div>
         </div>
       </div>
