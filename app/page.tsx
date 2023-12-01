@@ -42,6 +42,7 @@ export default async function Projects() {
                 description={result.properties.name.title[0].plain_text}
                 imgSrc={result.properties.image.files[0].file.url}
                 href={result.properties.image.files[0].file.url}
+                status={result.properties.status.select.name}
                 />
               ))
             }
