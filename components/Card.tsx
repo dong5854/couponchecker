@@ -1,7 +1,8 @@
 import Image from './Image'
 import Link from './Link'
+import Modal from './Modal'
 
-const Card = ({ title, description, imgSrc, href, status }) => (
+const Card = ({ title, dueDate, imgSrc, href, status }) => (
   <div className="md max-w-[544px] p-4 md:w-1/2">
     <div
       className={`${
@@ -38,15 +39,11 @@ const Card = ({ title, description, imgSrc, href, status }) => (
             title
           )}
         </h2>
-        <p className="prose mb-3 max-w-none text-gray-500 dark:text-gray-400">{description}</p>
+        <p className="prose mb-3 max-w-none text-gray-500 dark:text-gray-400">사용만료일: {dueDate}</p>
         {href && (
-          <Link
-            href={href}
-            className="text-base font-medium leading-6 text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-            aria-label={`Link to ${title}`}
-          >
-            {status}
-          </Link>
+            <Modal
+              status={status}
+            />
         )}
       </div>
     </div>
