@@ -122,12 +122,12 @@ export async function queryCoupons() {
         const notion = new Client({ auth: process.env.NOTION_KEY });
         const response = await notion.databases.query({ 
             database_id: process.env.COUPON_DB as string,
-             sorts: [
+            sorts: [
                 {
                     property: 'expireAt',
                     direction: 'ascending'
                 }
-             ]
+            ]
         });
         return <NotionQueryResult><unknown>response;
     } catch (error: unknown) {
