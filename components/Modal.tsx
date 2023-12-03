@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useCoupon } from '@/app/api/notion/useCoupon'
+import { updateCouponUse } from '@/app/api/notion/updateCouponUse'
 import { useRouter } from 'next/navigation'
 
 export default function Modal({pageId, status}) {
@@ -9,7 +9,7 @@ export default function Modal({pageId, status}) {
   const router = useRouter()
 
   const handleCoupon = async () => {
-    await useCoupon(pageId);
+    await updateCouponUse(pageId);
     router.refresh();
   };
 

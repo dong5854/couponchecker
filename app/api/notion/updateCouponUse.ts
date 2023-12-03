@@ -2,7 +2,7 @@
 
 import { Client } from "@notionhq/client";
 
-export async function useCoupon(pageId : string) {
+export async function updateCouponUse(pageId : string) {
   try {
     const notion = new Client({ auth: process.env.NOTION_KEY });
     const response = await notion.pages.update({
