@@ -1,3 +1,5 @@
+'use server'
+
 import { Client } from "@notionhq/client";
 
 export interface NotionQueryResult {
@@ -42,7 +44,7 @@ export interface Parent {
 
 export interface Properties {
     image:    Image;
-    status:   Status;
+    used:     Used;
     expireAt: ExpireAt;
     name:     Name;
 }
@@ -104,18 +106,11 @@ export interface Text {
     link:    null;
 }
 
-export interface Status {
-    id:     string;
-    type:   string;
-    select: Select;
+export interface Used {
+    id:       string;
+    type:     string;
+    checkbox: boolean;
 }
-
-export interface Select {
-    id:    string;
-    name:  string;
-    color: string;
-}
-
 
 export async function queryCoupons() {
     try {
