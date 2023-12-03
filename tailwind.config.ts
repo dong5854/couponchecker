@@ -27,6 +27,7 @@ module.exports = {
         primary: colors.emerald,
         gray: colors.gray,
       },
+      // @ts-ignore
       typography: ({ theme }) => ({
         DEFAULT: {
           css: {
