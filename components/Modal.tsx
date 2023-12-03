@@ -11,6 +11,7 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({pageId, status}) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [isUsed, setIsUsed] = useState(false)
   const router = useRouter()
 
   const handleCoupon = async () => {
@@ -19,14 +20,19 @@ const Modal: React.FC<ModalProps> = ({pageId, status}) => {
   };
 
   const useCouponHandler = () => {
+    setIsUsed(true)
     setIsOpen(isOpen => !isOpen)
   };
 
+  const useModalHandler = () => {
+    setIsOpen(isOpen => !isOpen)
+  }
+
   useEffect(() => {
-    if (isOpen) {
+    if (isUsed) {
       handleCoupon();
     }
-  }, [isOpen]);
+  }, [isUsed]);
 
   return (
     <>
@@ -75,7 +81,7 @@ const Modal: React.FC<ModalProps> = ({pageId, status}) => {
             onClick={useCouponHandler}
             className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">사용</button>
             <button type="button" 
-            onClick={useCouponHandler}
+            onClick={useModalHandler}
             className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">취소</button>
           </div>
         </div>
