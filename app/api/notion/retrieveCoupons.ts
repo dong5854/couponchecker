@@ -1,3 +1,5 @@
+'use server'
+
 import { Client } from "@notionhq/client";
 
 export async function retrieveCoupons() {
