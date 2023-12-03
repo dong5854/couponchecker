@@ -3,6 +3,9 @@ import { queryCoupons } from './api/notion/queryCoupons'
 
 export default async function Projects() {
   const couponsResponse = await queryCoupons()
+
+  console.log(couponsResponse.results)
+
   return (
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">

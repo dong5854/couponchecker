@@ -1,6 +1,9 @@
 'use server'
 
 import { Client } from "@notionhq/client";
+import axios, { Axios } from "axios";
+
+
 
 export interface NotionQueryResult {
     object:           string;
@@ -114,17 +117,31 @@ export interface Used {
 
 export async function queryCoupons() {
     try {
-        const notion = new Client({ auth: process.env.NOTION_KEY });
-        const response = await notion.databases.query({ 
-            database_id: process.env.COUPON_DB as string,
-            sorts: [
-                {
-                    property: 'expireAt',
-                    direction: 'ascending'
-                }
+        const client: Axios = axios.create({
+            baseURL: `https://api.notion.com/v1/databases`,
+            headers: { 
+                'Content-Type': 'application/json',
+                'Notion-Version': '2022-02-22',
+                'Authorization': `Bearer ${process.env.NOTION_KEY}`,
+                'Cache-Control': 'no-store'
+            },
+            responseType: 'json'
+        })
+
+        const raw = JSON.stringify({
+            "sorts": [
+              {
+                "property": "expireAt",
+                "direction": "ascending"
+              }
             ]
-        });
-        return <NotionQueryResult><unknown>response;
+        })
+        
+        const response = await client.post<NotionQueryResult>(`/${process.env.COUPON_DB as string}/query`, raw)
+
+        console.log(response.data);
+
+        return <NotionQueryResult><unknown>response.data;
     } catch (error: unknown) {
         if (typeof error === 'object' && error !== null) {
             const castedError = error as { message: string };
