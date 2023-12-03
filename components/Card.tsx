@@ -2,7 +2,7 @@ import Image from './Image'
 import Link from './Link'
 import Modal from './Modal'
 
-const Card = ({ title, dueDate, imgSrc, href, status }) => (
+const Card = ({ pageId, title, dueDate, imgSrc, href, status }) => (
   <div className="md max-w-[544px] p-4 md:w-1/2">
     <div
       className={`${
@@ -42,6 +42,7 @@ const Card = ({ title, dueDate, imgSrc, href, status }) => (
         <p className="prose mb-3 max-w-none text-gray-500 dark:text-gray-400">사용만료일: {dueDate}</p>
         {href && (
             <Modal
+              pageId={pageId}
               status={status}
             />
         )}

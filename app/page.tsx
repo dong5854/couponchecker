@@ -3,9 +3,6 @@ import { queryCoupons } from './api/notion/queryCoupons'
 
 export default async function Projects() {
   const couponsResponse = await queryCoupons()
-  
-  console.log(couponsResponse.results[0].properties)
-
   return (
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -23,11 +20,12 @@ export default async function Projects() {
               couponsResponse.results.map((result) => (
                 <Card
                 key={result.id}
+                pageId={result.id}
                 title={result.properties.name.title[0].plain_text}
                 dueDate={result.properties.expireAt.date.start}
                 imgSrc={result.properties.image.files[0].file.url}
                 href={result.properties.image.files[0].file.url}
-                status={result.properties.status.select.name}
+                status={result.properties.used.checkbox}
                 />
               ))
             }
