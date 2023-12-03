@@ -123,7 +123,6 @@ export async function queryCoupons() {
                 'Content-Type': 'application/json',
                 'Notion-Version': '2022-02-22',
                 'Authorization': `Bearer ${process.env.NOTION_KEY}`,
-                'Cache-Control': 'no-store'
             },
             responseType: 'json'
         })
