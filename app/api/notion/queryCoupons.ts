@@ -139,8 +139,6 @@ export async function queryCoupons() {
         
         const response = await client.post<NotionQueryResult>(`/${process.env.COUPON_DB as string}/query`, raw)
 
-        console.log(response.data);
-
         return <NotionQueryResult><unknown>response.data;
     } catch (error: unknown) {
         if (typeof error === 'object' && error !== null) {

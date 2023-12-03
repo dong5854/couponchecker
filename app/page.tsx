@@ -1,10 +1,10 @@
 import Card from '@/components/Card'
 import { queryCoupons } from './api/notion/queryCoupons'
 
-export default async function Projects() {
-  const couponsResponse = await queryCoupons()
+export const dynamic = 'force-dynamic'
 
-  console.log(couponsResponse.results)
+export default async function Page() {
+  const couponsResponse = await queryCoupons()
 
   return (
     <>
