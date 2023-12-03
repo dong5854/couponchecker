@@ -6,7 +6,7 @@ import Modal from './Modal'
 interface CardProps {
   pageId: string
   title: string
-  dueDate: Date
+  dueDate: string
   imgSrc: string
   href: string
   status: boolean

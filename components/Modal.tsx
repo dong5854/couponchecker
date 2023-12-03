@@ -26,7 +26,7 @@ const Modal: React.FC<ModalProps> = ({pageId, status}) => {
     if (isOpen) {
       handleCoupon();
     }
-  }, [isOpen]); // isOpen 값이 변경될 때마다 호출
+  }, [isOpen]);
 
   return (
     <>

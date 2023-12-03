@@ -56,7 +56,7 @@ export interface ExpireAt {
 }
 
 export interface DateClass {
-    start:     Date;
+    start:     string;
     end:       null;
     time_zone: null;
 }
