@@ -4,7 +4,12 @@ import { useState, useEffect } from 'react'
 import { updateCouponUse } from '@/app/api/notion/updateCouponUse'
 import { useRouter } from 'next/navigation'
 
-export default function Modal({pageId, status}) {
+interface ModalProps {
+  pageId: string
+  status: boolean
+}
+
+const Modal: React.FC<ModalProps> = ({pageId, status}) => {
   const [isOpen, setIsOpen] = useState(false)
   const router = useRouter()
 
@@ -80,3 +85,5 @@ export default function Modal({pageId, status}) {
   )}
   </>
   )}
+
+  export default Modal
