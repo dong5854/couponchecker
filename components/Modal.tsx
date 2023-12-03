@@ -12,9 +12,9 @@ export default function Modal({pageId, status}) {
       setIsOpen(false)
       await useCoupon(pageId)
       router.refresh()
-      return
+    } else {
+      setIsOpen(true)
     }
-    setIsOpen(true)
   }
   return (
     <>
