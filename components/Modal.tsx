@@ -1,21 +1,28 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useCoupon } from '@/app/api/notion/useCoupon'
 import { useRouter } from 'next/navigation'
 
 export default function Modal({pageId, status}) {
   const [isOpen, setIsOpen] = useState(false)
   const router = useRouter()
-  const useCouponHandler = async() => {
+
+  const handleCoupon = async () => {
+    await useCoupon(pageId);
+    router.refresh();
+  };
+
+  const useCouponHandler = () => {
+    setIsOpen(isOpen => !isOpen)
+  };
+
+  useEffect(() => {
     if (isOpen) {
-      setIsOpen(false)
-      await useCoupon(pageId)
-      router.refresh()
-    } else {
-      setIsOpen(true)
+      handleCoupon();
     }
-  }
+  }, [isOpen]); // isOpen 값이 변경될 때마다 호출
+
   return (
     <>
     {status ? (
