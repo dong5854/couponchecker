@@ -1,5 +1,6 @@
 import Card from '@/components/Card'
 import { queryCoupons } from './api/notion/queryCoupons'
+import DropDown from '@/components/DropDown'
 
 export const dynamic = 'force-dynamic'
 
@@ -17,7 +18,8 @@ export default async function Page() {
             쿠폰의 사용을 체크하세요.
           </p>
         </div>
-        <div className="container py-12">
+        <div className="container py-1">
+        <DropDown/>
           <div className="-m-4 flex flex-wrap">
             {
               couponsResponse.results.map((result) => (
