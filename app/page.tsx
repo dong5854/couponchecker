@@ -1,12 +1,12 @@
-import Card from "@/components/Card";
-import { queryCoupons } from "./api/notion/queryCoupons";
-import { conditionAll } from "./api/notion/queryCouponsCondition";
-import DropDown from "@/components/DropDown";
+import Card from '@/components/Card'
+import { queryCoupons } from './api/notion/queryCoupons'
+import { conditionAll } from './api/notion/queryCouponsCondition'
+import DropDown from '@/components/DropDown'
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic'
 
 export default async function Page() {
-  const couponsResponse = await queryCoupons(conditionAll);
+  const couponsResponse = await queryCoupons(conditionAll)
   return (
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -36,5 +36,5 @@ export default async function Page() {
         </div>
       </div>
     </>
-  );
+  )
 }
