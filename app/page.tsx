@@ -1,12 +1,12 @@
-import Card from '@/components/Card'
-import { queryCoupons } from './api/notion/queryCoupons'
-import DropDown from '@/components/DropDown'
+import Card from "@/components/Card";
+import { queryCoupons } from "./api/notion/queryCoupons";
+import { conditionAll } from "./api/notion/queryCouponsCondition";
+import DropDown from "@/components/DropDown";
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
 export default async function Page() {
-  const couponsResponse = await queryCoupons()
-
+  const couponsResponse = await queryCoupons(conditionAll);
   return (
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -19,11 +19,10 @@ export default async function Page() {
           </p>
         </div>
         <div className="container py-1">
-        <DropDown/>
+          <DropDown />
           <div className="-m-4 flex flex-wrap">
-            {
-              couponsResponse.results.map((result) => (
-                <Card
+            {couponsResponse.results.map((result) => (
+              <Card
                 key={result.id}
                 pageId={result.id}
                 title={result.properties.name.title[0].plain_text}
@@ -31,12 +30,11 @@ export default async function Page() {
                 imgSrc={result.properties.image.files[0].file.url}
                 href={result.properties.image.files[0].file.url}
                 status={result.properties.used.checkbox}
-                />
-              ))
-            }
+              />
+            ))}
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }
