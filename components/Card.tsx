@@ -6,13 +6,13 @@ import Modal from './Modal'
 interface CardProps {
   pageId: string
   title: string
-  dueDate: string
+  dueDate: Date
   imgSrc: string
   href: string
   status: boolean
 }
 
-const Card: React.FC<CardProps> =  ({ pageId, title, dueDate, imgSrc, href, status }) => (
+const Card: React.FC<CardProps> = ({ pageId, title, dueDate, imgSrc, href, status }) => (
   <div className="md max-w-[544px] p-4 md:w-1/2">
     <div
       className={`${
@@ -49,13 +49,10 @@ const Card: React.FC<CardProps> =  ({ pageId, title, dueDate, imgSrc, href, stat
             title
           )}
         </h2>
-        <p className="prose mb-3 max-w-none text-gray-500 dark:text-gray-400">사용만료일: {dueDate}</p>
-        {href && (
-            <Modal
-              pageId={pageId}
-              status={status}
-            />
-        )}
+        <p className="prose mb-3 max-w-none text-gray-500 dark:text-gray-400">
+          사용만료일: {dueDate.toString()}
+        </p>
+        {href && <Modal pageId={pageId} status={status} />}
       </div>
     </div>
   </div>
