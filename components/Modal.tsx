@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { updateCouponUse } from '@/app/api/notion/updateCouponUse'
 import { useRouter } from 'next/navigation'
 
@@ -14,10 +14,10 @@ const Modal: React.FC<ModalProps> = ({pageId, status}) => {
   const [isUsed, setIsUsed] = useState(false)
   const router = useRouter()
 
-  const handleCoupon = async () => {
+  const handleCoupon = useCallback( async () => {
     await updateCouponUse(pageId);
     router.refresh();
-  };
+  }, [pageId, router]);
 
   const useCouponHandler = () => {
     setIsUsed(true)
@@ -32,7 +32,7 @@ const Modal: React.FC<ModalProps> = ({pageId, status}) => {
     if (isUsed) {
       handleCoupon();
     }
-  }, [isUsed]);
+  }, [handleCoupon, isUsed]);
 
   return (
     <>
