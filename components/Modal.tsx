@@ -14,10 +14,10 @@ const Modal: React.FC<ModalProps> = ({ pageId, status }) => {
   const [isUsed, setIsUsed] = useState(false)
   const router = useRouter()
 
-  const handleCoupon = useCallback( async () => {
-    await updateCouponUse(pageId);
-    router.refresh();
-  }, [pageId, router]);
+  const handleCoupon = useCallback(async () => {
+    await updateCouponUse(pageId)
+    router.refresh()
+  }, [pageId, router])
 
   const useCouponHandler = () => {
     setIsUsed(true)
@@ -32,7 +32,7 @@ const Modal: React.FC<ModalProps> = ({ pageId, status }) => {
     if (isUsed) {
       handleCoupon()
     }
-  }, [handleCoupon, isUsed]);
+  }, [handleCoupon, isUsed])
 
   return (
     <>

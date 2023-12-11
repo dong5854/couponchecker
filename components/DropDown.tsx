@@ -1,7 +1,5 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-
 const DropDown = () => {
   return (
     <details className="dropdown">
