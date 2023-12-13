@@ -5,7 +5,7 @@ import { Client } from '@notionhq/client'
 export async function updateCouponUse(pageId: string) {
   try {
     const notion = new Client({ auth: process.env.NOTION_KEY })
-    const response = await notion.pages.update({
+    await notion.pages.update({
       page_id: pageId,
       properties: {
         used: {
