@@ -2,25 +2,22 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { updateCouponUse } from '@/app/api/notion/updateCouponUse'
-import { useRouter } from 'next/navigation'
 
 interface ModalProps {
   pageId: string
-  status: boolean
+  isUsed: boolean
 }
 
-const Modal: React.FC<ModalProps> = ({ pageId, status }) => {
+const Modal: React.FC<ModalProps> = ({ pageId, isUsed }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [isUsed, setIsUsed] = useState(false)
-  const router = useRouter()
+  const [modalIsUsed, setModalIsUsed] = useState(isUsed)
 
   const handleCoupon = useCallback(async () => {
     await updateCouponUse(pageId)
-    router.refresh()
-  }, [pageId, router])
+  }, [pageId])
 
   const useCouponHandler = () => {
-    setIsUsed(true)
+    setModalIsUsed(true)
     setIsOpen((isOpen) => !isOpen)
   }
 
@@ -29,14 +26,14 @@ const Modal: React.FC<ModalProps> = ({ pageId, status }) => {
   }
 
   useEffect(() => {
-    if (isUsed) {
+    if (modalIsUsed) {
       handleCoupon()
     }
-  }, [handleCoupon, isUsed])
+  }, [handleCoupon, modalIsUsed])
 
   return (
     <>
-      {status ? (
+      {modalIsUsed ? (
         <button
           type="button"
           className="inline-flex items-center rounded-md border border-transparent bg-gray-600 px-4 py-2 text-sm font-medium text-white shadow-sm"

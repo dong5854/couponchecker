@@ -9,10 +9,10 @@ interface CardProps {
   dueDate: Date
   imgSrc: string
   href: string
-  status: boolean
+  isUsed: boolean
 }
 
-const Card: React.FC<CardProps> = ({ pageId, title, dueDate, imgSrc, href, status }) => (
+const Card: React.FC<CardProps> = ({ pageId, title, dueDate, imgSrc, href, isUsed }) => (
   <div className="md max-w-[544px] p-4 md:w-1/2">
     <div
       className={`${
@@ -52,7 +52,7 @@ const Card: React.FC<CardProps> = ({ pageId, title, dueDate, imgSrc, href, statu
         <p className="prose mb-3 max-w-none text-gray-500 dark:text-gray-400">
           사용만료일: {dueDate.toString()}
         </p>
-        {href && <Modal pageId={pageId} status={status} />}
+        {href && <Modal pageId={pageId} isUsed={isUsed} />}
       </div>
     </div>
   </div>

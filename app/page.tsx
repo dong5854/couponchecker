@@ -1,12 +1,26 @@
+'use client'
 import Card from '@/components/Card'
-import { queryCoupons } from './api/notion/queryCoupons'
-import { conditionAll } from './api/notion/queryCouponsCondition'
+import { NotionQueryResult, queryCoupons } from './api/notion/queryCoupons'
+import { Condition, conditionAll } from './api/notion/queryCouponsCondition'
 import DropDown from '@/components/DropDown'
+import { useState, useEffect } from 'react'
 
 export const dynamic = 'force-dynamic'
 
-export default async function Page() {
-  const couponsResponse = await queryCoupons(conditionAll)
+export default function Page() {
+  const [couponsResponse, setCouponsResponse] = useState<NotionQueryResult | null>(null)
+  const [condition, setCondition] = useState(conditionAll)
+  useEffect(() => {
+    const resp = async () => {
+      const resp = await queryCoupons(condition)
+      setCouponsResponse(resp)
+    }
+    resp()
+  }, [condition])
+  const updateCondition = (newCondition: Condition) => {
+    setCondition(newCondition)
+  }
+
   return (
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -19,9 +33,9 @@ export default async function Page() {
           </p>
         </div>
         <div className="container py-1">
-          <DropDown />
+          <DropDown updateCondition={updateCondition} />
           <div className="-m-4 flex flex-wrap">
-            {couponsResponse.results.map((result) => (
+            {couponsResponse?.results.map((result) => (
               <Card
                 key={result.id}
                 pageId={result.id}
@@ -29,7 +43,7 @@ export default async function Page() {
                 dueDate={result.properties.expireAt.date.start}
                 imgSrc={result.properties.image.files[0].file.url}
                 href={result.properties.image.files[0].file.url}
-                status={result.properties.used.checkbox}
+                isUsed={result.properties.used.checkbox}
               />
             ))}
           </div>

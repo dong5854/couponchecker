@@ -1,8 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import {
+  Condition,
+  conditionAll,
+  conditonUnUsed,
+  conditionUsed,
+} from '@/app/api/notion/queryCouponsCondition'
+import React, { useState } from 'react'
 
-const DropDown = () => {
+interface DropDownProps {
+  updateCondition: (condition: Condition) => void
+}
+
+const DropDown: React.FC<DropDownProps> = ({ updateCondition }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [text, setText] = useState('전체')
 
@@ -10,9 +20,10 @@ const DropDown = () => {
     setIsOpen(!isOpen)
   }
 
-  const closeDropdown = (text: string) => {
+  const closeDropdown = (text: string, condition: Condition) => {
     setIsOpen(false)
     setText(text)
+    updateCondition(condition)
   }
 
   return (
@@ -22,13 +33,13 @@ const DropDown = () => {
       </div>
       {isOpen && (
         <ul className="menu dropdown-content z-[1] w-52 rounded-box bg-base-100 p-2 shadow">
-          <li onClick={() => closeDropdown('전체')}>
+          <li onClick={() => closeDropdown('전체', conditionAll)}>
             <button>전체</button>
           </li>
-          <li onClick={() => closeDropdown('미사용 쿠폰')}>
+          <li onClick={() => closeDropdown('미사용 쿠폰', conditonUnUsed)}>
             <button>미사용 쿠폰</button>
           </li>
-          <li onClick={() => closeDropdown('사용할 쿠폰')}>
+          <li onClick={() => closeDropdown('사용한 쿠폰', conditionUsed)}>
             <button>사용한 쿠폰</button>
           </li>
         </ul>
