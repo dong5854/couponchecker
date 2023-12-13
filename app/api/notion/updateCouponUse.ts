@@ -13,7 +13,6 @@ export async function updateCouponUse(pageId: string) {
         },
       },
     })
-    console.log(response)
   } catch (error: unknown) {
     if (typeof error === 'object' && error !== null) {
       const castedError = error as { message: string }

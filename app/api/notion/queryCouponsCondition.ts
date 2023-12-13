@@ -8,25 +8,29 @@ const sortExpireAtAsc = {
 }
 
 const filterUnUsed = {
-  filter: [
-    {
-      property: 'used',
-      checkbox: {
-        equals: false,
+  filter: {
+    and: [
+      {
+        property: 'used',
+        checkbox: {
+          equals: false,
+        },
       },
-    },
-  ],
+    ],
+  },
 }
 
 const filterUsed = {
-  filter: [
-    {
-      property: 'used',
-      checkbox: {
-        equals: true,
+  filter: {
+    and: [
+      {
+        property: 'used',
+        checkbox: {
+          equals: true,
+        },
       },
-    },
-  ],
+    ],
+  },
 }
 
 type Condition = string
