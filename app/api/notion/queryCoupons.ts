@@ -124,7 +124,7 @@ export async function queryCoupons(condition: Condition) {
       responseType: 'json',
     })
 
-    const body = condition
+    const body = condition.conditionBody
 
     const response = await client.post<NotionQueryResult>(
       `/${process.env.COUPON_DB as string}/query`,

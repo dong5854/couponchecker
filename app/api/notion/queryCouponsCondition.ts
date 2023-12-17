@@ -33,19 +33,31 @@ const filterUsed = {
   },
 }
 
-type Condition = string
+interface Condition {
+  text: string
+  conditionBody: string
+}
 
-const conditionAll: Condition = JSON.stringify(sortExpireAtAsc)
+const conditionAll: Condition = {
+  text: `전체`,
+  conditionBody: JSON.stringify(sortExpireAtAsc),
+}
 
-const conditonUnUsed: Condition = JSON.stringify({
-  ...sortExpireAtAsc,
-  ...filterUnUsed,
-})
+const conditonUnUsed: Condition = {
+  text: `미사용 쿠폰`,
+  conditionBody: JSON.stringify({
+    ...sortExpireAtAsc,
+    ...filterUnUsed,
+  }),
+}
 
-const conditionUsed: Condition = JSON.stringify({
-  ...sortExpireAtAsc,
-  ...filterUsed,
-})
+const conditionUsed: Condition = {
+  text: `사용 쿠폰`,
+  conditionBody: JSON.stringify({
+    ...sortExpireAtAsc,
+    ...filterUsed,
+  }),
+}
 
 export type { Condition }
 export { conditionAll, conditionUsed, conditonUnUsed }

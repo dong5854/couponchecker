@@ -2,7 +2,7 @@
 import Card from '@/components/Card'
 import { NotionQueryResult, queryCoupons } from './api/notion/queryCoupons'
 import { Condition, conditonUnUsed } from './api/notion/queryCouponsCondition'
-import DropDown from '@/components/DropDown'
+import CouponConditionDropDown from '@/components/CouponConditionDropDown'
 import { useState, useEffect } from 'react'
 
 export const dynamic = 'force-dynamic'
@@ -33,7 +33,7 @@ export default function Page() {
           </p>
         </div>
         <div className="container py-1">
-          <DropDown updateCondition={updateCondition} />
+          <CouponConditionDropDown initCondition={condition} updateCondition={updateCondition} />
           <div className="-m-4 flex flex-wrap">
             {couponsResponse?.results.map((result) => (
               <Card
