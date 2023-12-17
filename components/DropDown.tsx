@@ -21,9 +21,9 @@ const DropDown: React.FC<DropDownProps> = ({ updateCondition }) => {
   }
 
   const closeDropdown = (text: string, condition: Condition) => {
-    setIsOpen(false)
     setText(text)
     updateCondition(condition)
+    setIsOpen(false)
   }
 
   return (
