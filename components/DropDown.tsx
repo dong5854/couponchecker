@@ -20,12 +20,7 @@ const DropDown: React.FC<DropDownProps> = ({ updateCondition }) => {
     setIsOpen(!isOpen)
   }
 
-  const closeDropdown = (
-    e: React.MouseEvent | React.TouchEvent,
-    text: string,
-    condition: Condition
-  ) => {
-    e.stopPropagation()
+  const closeDropdown = (text: string, condition: Condition) => {
     setText(text)
     updateCondition(condition)
     setIsOpen(false)
@@ -40,22 +35,22 @@ const DropDown: React.FC<DropDownProps> = ({ updateCondition }) => {
         <ul className="menu dropdown-content z-[1] w-52 rounded-box bg-base-100 p-2 shadow">
           <li
             role="button"
-            onClick={(e) => closeDropdown(e, '전체', conditionAll)}
-            onTouchEnd={(e) => closeDropdown(e, '전체', conditionAll)}
+            onClick={() => closeDropdown('전체', conditionAll)}
+            onTouchEnd={() => closeDropdown('전체', conditionAll)}
           >
             <button>전체</button>
           </li>
           <li
             role="button"
-            onClick={(e) => closeDropdown(e, '미사용 쿠폰', conditonUnUsed)}
-            onTouchEnd={(e) => closeDropdown(e, '미사용 쿠폰', conditonUnUsed)}
+            onClick={() => closeDropdown('미사용 쿠폰', conditonUnUsed)}
+            onTouchEnd={() => closeDropdown('미사용 쿠폰', conditonUnUsed)}
           >
             <button>미사용 쿠폰</button>
           </li>
           <li
             role="button"
-            onClick={(e) => closeDropdown(e, '사용한 쿠폰', conditionUsed)}
-            onTouchEnd={(e) => closeDropdown(e, '사용한 쿠폰', conditionUsed)}
+            onClick={() => closeDropdown('사용한 쿠폰', conditionUsed)}
+            onTouchEnd={() => closeDropdown('사용한 쿠폰', conditionUsed)}
           >
             <button>사용한 쿠폰</button>
           </li>
