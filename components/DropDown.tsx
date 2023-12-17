@@ -33,14 +33,16 @@ const DropDown: React.FC<DropDownProps> = ({ updateCondition }) => {
       </div>
       {isOpen && (
         <ul className="menu dropdown-content z-[1] w-52 rounded-box bg-base-100 p-2 shadow">
-          <li onClick={() => closeDropdown('전체', conditionAll)}>
-            <button>전체</button>
+          <li>
+            <button onClick={() => closeDropdown('전체', conditionAll)}>전체</button>
           </li>
-          <li onClick={() => closeDropdown('미사용 쿠폰', conditonUnUsed)}>
-            <button>미사용 쿠폰</button>
+          <li>
+            <button onClick={() => closeDropdown('미사용 쿠폰', conditonUnUsed)}>
+              미사용 쿠폰
+            </button>
           </li>
-          <li onClick={() => closeDropdown('사용한 쿠폰', conditionUsed)}>
-            <button>사용한 쿠폰</button>
+          <li>
+            <button onClick={() => closeDropdown('사용한 쿠폰', conditionUsed)}>사용한 쿠폰</button>
           </li>
         </ul>
       )}
