@@ -14,7 +14,7 @@ interface DropDownProps {
 
 const DropDown: React.FC<DropDownProps> = ({ updateCondition }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [text, setText] = useState('전체')
+  const [text, setText] = useState('미사용 쿠폰')
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen)
