@@ -1,7 +1,7 @@
 'use client'
 import Card from '@/components/Card'
 import { NotionQueryResult, queryCoupons } from './api/notion/queryCoupons'
-import { Condition, conditionAll } from './api/notion/queryCouponsCondition'
+import { Condition, conditonUnUsed } from './api/notion/queryCouponsCondition'
 import DropDown from '@/components/DropDown'
 import { useState, useEffect } from 'react'
 
@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic'
 
 export default function Page() {
   const [couponsResponse, setCouponsResponse] = useState<NotionQueryResult | null>(null)
-  const [condition, setCondition] = useState(conditionAll)
+  const [condition, setCondition] = useState(conditonUnUsed)
   useEffect(() => {
     const resp = async () => {
       const resp = await queryCoupons(condition)
