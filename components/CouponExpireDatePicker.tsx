@@ -13,7 +13,7 @@ const css = `
   }
   .rdp {
     margin-top : 0;
-    min-height : 350px;
+    min-height : 320px;
   }
   .rdp-day_selected, .rdp-day_selected:focus-visible, .rdp-day_selected:hover {
     background-color : #006400;
@@ -24,7 +24,7 @@ const CouponExpireDatePicker = () => {
   const [selected, setSelected] = useState<Date | undefined>(new Date())
   let label = <p>쿠폰 만료 기간을 선택해주세요.</p>
   if (selected) {
-    label = <p>쿠폰 만료 기간은 {format(selected, 'PPP EEE', { locale: ko })} 입니다.</p>
+    label = <p>쿠폰 만료 기간은 {format(selected, 'PPP', { locale: ko })} 입니다.</p>
   }
   return (
     <>
