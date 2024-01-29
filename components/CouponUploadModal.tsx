@@ -4,6 +4,7 @@ import React from 'react'
 import TextInput from './TextInput'
 import CouponExpireDatePicker from './CouponExpireDatePicker'
 import FileInput from './FileInput'
+import { TestUpload } from '@/app/api/storage/uploadFile'
 
 const CouponUploadModal = () => {
   return (
@@ -25,7 +26,12 @@ const CouponUploadModal = () => {
           <FileInput topLeftLabel="쿠폰을 업로드해주세요." />
           <TextInput placeHolder="쿠폰명을 입력하세요." topLeftLabel="쿠폰명" />
           <CouponExpireDatePicker />
-          <button className="btn btn-success form-control mx-auto w-full max-w-xs">업로드</button>
+          <button
+            onClick={() => TestUpload()}
+            className="btn btn-success form-control mx-auto w-full max-w-xs"
+          >
+            업로드
+          </button>
         </div>
       </dialog>
     </>
