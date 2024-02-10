@@ -57,6 +57,8 @@ export async function uploadCoupon(properties: Properties) {
     }
 
     const response = await client.post(`/pages`, body)
+
+    console.log(response)
   } catch (error: unknown) {
     if (typeof error === 'object' && error !== null) {
       const castedError = error as { message: string }
