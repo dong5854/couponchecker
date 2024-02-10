@@ -4,7 +4,7 @@ interface TextInputProps {
   topRightLabel?: string
   btmLeftLabel?: string
   btmRightLabel?: string
-  onTextChange: Function
+  onTextChange: (text: string) => void
 }
 
 const TextInput: React.FC<TextInputProps> = (TextInputProps) => {

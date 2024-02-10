@@ -44,6 +44,7 @@ export interface Parent {
 
 export interface Properties {
   image: Image
+  imageUrl: ImageUrl
   used: Used
   expireAt: ExpireAt
   name: Name
@@ -76,6 +77,32 @@ export interface FileElement {
 export interface FileFile {
   url: string
   expiry_time: Date
+}
+
+export interface ImageUrl {
+  rich_text: TextElement[]
+}
+
+export interface TextElement {
+  type: string
+  text: Text
+  annotations: Annotations
+  plain_text: string
+  href: null
+}
+
+export interface Text {
+  content: string
+  link: null
+}
+
+export interface Annotations {
+  bold: boolean
+  italic: boolean
+  strikethrough: boolean
+  underline: boolean
+  code: boolean
+  color: string
 }
 
 export interface Name {

@@ -4,7 +4,7 @@ interface FileInputProps {
   topRightLabel?: string
   btmLeftLabel?: string
   btmRightLabel?: string
-  onFileChange: Function
+  onFileChange: (fileData: File) => void
 }
 
 const FileInput: React.FC<FileInputProps> = (FileInputProps) => {

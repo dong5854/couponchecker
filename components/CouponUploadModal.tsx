@@ -4,21 +4,41 @@ import React, { useState } from 'react'
 import TextInput from './TextInput'
 import CouponExpireDatePicker from './CouponExpireDatePicker'
 import FileInput from './FileInput'
-import { TestUpload } from '@/app/api/storage/uploadFile'
+import { UploadFile, UploadFileInterface } from '@/app/api/storage/uploadFile'
+import { uploadCoupon, Properties } from '@/app/api/notion/uploadCoupon'
 
 const CouponUploadModal = () => {
   const [file, setFile] = useState<File>()
-  const [name, setName] = useState<String>('')
-  const [expire, setExpire] = useState<Date>(new Date())
+  const [name, setName] = useState<string>('')
+  const [expireDate, setExpireDate] = useState<Date>(new Date())
 
   const handleFileChange = (fileData: File) => setFile(fileData)
   const handleNameChange = (name: string) => setName(name)
-  const handleDateChange = (expire: Date) => setExpire(expire)
+  const handleDateChange = (expire: Date) => setExpireDate(expire)
 
   const fileUpload = () => {
-    console.log(file)
-    console.log(name)
-    console.log(expire)
+    ;(document.getElementById('coupon-upload-modal') as HTMLDialogElement).close()
+    const uploadFile: UploadFileInterface = {
+      file: file!,
+      name: name,
+      expireDate: expireDate,
+    }
+
+    UploadFile(uploadFile)
+      .then((imagePath) => {
+        const notionUpload: Properties = {
+          name: name,
+          expireAt: expireDate,
+          imageUrl: imagePath,
+          used: false,
+        }
+        uploadCoupon(notionUpload)
+        window.location.reload()
+      })
+      .catch((error) => {
+        console.log(error)
+        alert('업로드에 실패했습니다.')
+      })
   }
 
   return (
@@ -43,7 +63,7 @@ const CouponUploadModal = () => {
             placeHolder="쿠폰명을 입력하세요."
             topLeftLabel="쿠폰명"
           />
-          <CouponExpireDatePicker initialDate={expire} onDateChange={handleDateChange} />
+          <CouponExpireDatePicker initialDate={expireDate} onDateChange={handleDateChange} />
           <button
             onClick={fileUpload}
             className="btn btn-success form-control mx-auto w-full max-w-xs"

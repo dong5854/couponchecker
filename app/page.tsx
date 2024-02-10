@@ -43,8 +43,16 @@ export default function Page() {
                 pageId={result.id}
                 title={result.properties.name.title[0].plain_text}
                 dueDate={result.properties.expireAt.date.start}
-                imgSrc={result.properties.image.files[0].file.url}
-                href={result.properties.image.files[0].file.url}
+                imgSrc={
+                  result.properties.image.files[0]?.file.url
+                    ? result.properties.image.files[0]?.file.url
+                    : result.properties.imageUrl.rich_text[0]?.text.content
+                }
+                href={
+                  result.properties.image.files[0]?.file.url
+                    ? result.properties.image.files[0]?.file.url
+                    : result.properties.imageUrl.rich_text[0]?.text.content
+                }
                 isUsed={result.properties.used.checkbox}
               />
             ))}
