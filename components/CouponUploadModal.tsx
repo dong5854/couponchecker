@@ -18,6 +18,18 @@ const CouponUploadModal = () => {
   const handleDateChange = (expire: Date) => setExpireDate(expire)
 
   const fileUpload = () => {
+    if (!file || !name || !expireDate) {
+      alert('쿠폰 정보를 모두 입력해주세요.')
+      return
+    }
+    if (name.length > 50) {
+      alert('쿠폰명은 50자 이하로 입력해주세요.')
+      return
+    }
+    if (file.size > 1024 * 1024 * 5) {
+      alert('쿠폰 이미지는 5MB 이하로 업로드해주세요.')
+      return
+    }
     setUploadWaiting(true)
     const uploadFile: UploadFileInterface = {
       file: file!,

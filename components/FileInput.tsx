@@ -10,10 +10,7 @@ interface FileInputProps {
 const FileInput: React.FC<FileInputProps> = (FileInputProps) => {
   const sendFileToParent = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files ? e.target.files[0] : null
-    if (!selectedFile) {
-      alert('업로드 할 파일을 선택해주세요.')
-      return
-    }
+    if (!selectedFile) return
     FileInputProps.onFileChange(selectedFile)
   }
   return (
