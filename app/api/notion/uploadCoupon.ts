@@ -1,5 +1,6 @@
 'use server'
-import { Client } from '@notionhq/client'
+
+import axios, { Axios } from 'axios'
 
 export interface Properties {
   name: string
@@ -9,41 +10,59 @@ export interface Properties {
 }
 
 export async function uploadCoupon(properties: Properties) {
-  const notion = new Client({ auth: process.env.NOTION_KEY })
-  const response = await notion.pages.create({
-    parent: {
-      type: 'database_id',
-      database_id: process.env.COUPON_DB as string,
-    },
-    properties: {
-      name: {
-        title: [
-          {
-            text: {
-              content: properties.name,
-            },
-          },
-        ],
+  try {
+    const client: Axios = axios.create({
+      baseURL: `https://api.notion.com/v1`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Notion-Version': '2022-06-28',
+        Authorization: `Bearer ${process.env.NOTION_KEY}`,
       },
-      expireAt: {
-        date: {
-          start: properties.expireAt.toISOString().substring(0, 10),
+      responseType: 'json',
+    })
+
+    const body = {
+      parent: {
+        type: 'database_id',
+        database_id: process.env.COUPON_DB as string,
+      },
+      properties: {
+        name: {
+          title: [
+            {
+              text: {
+                content: properties.name,
+              },
+            },
+          ],
+        },
+        expireAt: {
+          date: {
+            start: properties.expireAt.toISOString().substring(0, 10),
+          },
+        },
+        imageUrl: {
+          rich_text: [
+            {
+              text: {
+                content: properties.imageUrl,
+              },
+            },
+          ],
+        },
+        used: {
+          checkbox: properties.used,
         },
       },
-      imageUrl: {
-        rich_text: [
-          {
-            text: {
-              content: properties.imageUrl,
-            },
-          },
-        ],
-      },
-      used: {
-        checkbox: properties.used,
-      },
-    },
-  })
+    }
 
-  console.log(response)
+    const response = await client.post(`/pages`, body)
+  } catch (error: unknown) {
+    if (typeof error === 'object' && error !== null) {
+      const castedError = error as { message: string }
+      console.error('Error retrieving coupons:', castedError.message)
+      throw castedError
+    }
+    throw new Error('Unknown error occurred')
+  }
 }
