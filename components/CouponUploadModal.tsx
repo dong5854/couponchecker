@@ -8,6 +8,7 @@ import { UploadFile, UploadFileInterface } from '@/app/api/storage/uploadFile'
 import { uploadCoupon, Properties } from '@/app/api/notion/uploadCoupon'
 
 const CouponUploadModal = () => {
+  const [uploadWaiting, setUploadWaiting] = useState(false)
   const [file, setFile] = useState<File>()
   const [name, setName] = useState<string>('')
   const [expireDate, setExpireDate] = useState<Date>(new Date())
@@ -17,7 +18,7 @@ const CouponUploadModal = () => {
   const handleDateChange = (expire: Date) => setExpireDate(expire)
 
   const fileUpload = () => {
-    ;(document.getElementById('coupon-upload-modal') as HTMLDialogElement).close()
+    setUploadWaiting(true)
     const uploadFile: UploadFileInterface = {
       file: file!,
       name: name,
@@ -64,12 +65,21 @@ const CouponUploadModal = () => {
             topLeftLabel="쿠폰명"
           />
           <CouponExpireDatePicker initialDate={expireDate} onDateChange={handleDateChange} />
-          <button
-            onClick={fileUpload}
-            className="btn btn-success form-control mx-auto w-full max-w-xs"
-          >
-            업로드
-          </button>
+          {uploadWaiting ? (
+            <button
+              disabled
+              className="btn btn-success form-control mx-auto w-full max-w-xs disabled:bg-green-950"
+            >
+              <span className="loading loading-spinner text-success" />
+            </button>
+          ) : (
+            <button
+              onClick={fileUpload}
+              className="btn btn-success form-control mx-auto w-full max-w-xs"
+            >
+              업로드
+            </button>
+          )}
         </div>
       </dialog>
     </>
