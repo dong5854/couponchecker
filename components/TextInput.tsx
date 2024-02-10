@@ -4,9 +4,14 @@ interface TextInputProps {
   topRightLabel?: string
   btmLeftLabel?: string
   btmRightLabel?: string
+  onTextChange: Function
 }
 
 const TextInput: React.FC<TextInputProps> = (TextInputProps) => {
+  const sendTextToParent = (e: React.ChangeEvent<HTMLInputElement>) => {
+    TextInputProps.onTextChange(e.target.value)
+  }
+
   return (
     <label className="form-control mx-auto w-full max-w-xs">
       <div className="label">
@@ -16,6 +21,7 @@ const TextInput: React.FC<TextInputProps> = (TextInputProps) => {
       <input
         type="text"
         placeholder={TextInputProps.placeHolder}
+        onChange={sendTextToParent}
         className="input input-bordered w-full max-w-xs"
       />
       <div className="label">

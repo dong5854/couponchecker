@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { format } from 'date-fns'
 import { ko } from 'date-fns/locale'
@@ -20,8 +20,18 @@ const css = `
   }
 `
 
-const CouponExpireDatePicker = () => {
-  const [selected, setSelected] = useState<Date | undefined>(new Date())
+interface DatePickerProps {
+  initialDate?: Date
+  onDateChange: (date: Date) => void
+}
+
+const CouponExpireDatePicker: React.FC<DatePickerProps> = (DatePickerProps) => {
+  const [selected, setSelected] = useState<Date | undefined>(DatePickerProps.initialDate)
+
+  useEffect(() => {
+    DatePickerProps.onDateChange(selected!)
+  })
+
   let label = <p>쿠폰 만료 기간을 선택해주세요.</p>
   if (selected) {
     label = <p>쿠폰 만료 기간은 {format(selected, 'PPP', { locale: ko })} 입니다.</p>
