@@ -1,34 +1,24 @@
 'use client'
 
-import {
-  Condition,
-  conditionAll,
-  conditonUnUsed,
-  conditionUsed,
-} from '@/app/api/notion/queryCouponsCondition'
 import React, { useState } from 'react'
 
 interface DropDownProps {
-  initCondition: Condition
-  updateCondition: (condition: Condition) => void
+  isUsed: boolean
+  updateUsed: (isUsed: boolean) => void
 }
 
-const DropDown: React.FC<DropDownProps> = ({ initCondition, updateCondition }) => {
+const DropDown: React.FC<DropDownProps> = ({ isUsed, updateUsed }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [text, setText] = useState(initCondition.text)
+  const [text, setText] = useState(isUsed ? '사용 쿠폰' : '미사용 쿠폰')
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen)
   }
 
-  const closeDropdown = (
-    e: React.MouseEvent | React.TouchEvent,
-    text: string,
-    condition: Condition
-  ) => {
+  const closeDropdown = (e: React.MouseEvent | React.TouchEvent, isUsed: boolean) => {
     e.preventDefault()
-    setText(text)
-    updateCondition(condition)
+    setText(isUsed ? '사용 쿠폰' : '미사용 쿠폰')
+    updateUsed(isUsed)
     setIsOpen(false)
   }
 
@@ -39,15 +29,15 @@ const DropDown: React.FC<DropDownProps> = ({ initCondition, updateCondition }) =
       </div>
       {isOpen && (
         <ul className="menu dropdown-content z-[1] w-52 rounded-box bg-base-100 p-2 shadow">
-          {[conditionAll, conditonUnUsed, conditionUsed].map((condition, index) => {
+          {[true, false].map((isUsed, index) => {
             return (
               <li
                 role="button"
                 key={index}
-                onClick={(e) => closeDropdown(e, condition.text, condition)}
-                onTouchEnd={(e) => closeDropdown(e, condition.text, condition)}
+                onClick={(e) => closeDropdown(e, isUsed)}
+                onTouchEnd={(e) => closeDropdown(e, isUsed)}
               >
-                <button>{condition.text}</button>
+                <button>{isUsed ? '사용 쿠폰' : '미사용 쿠폰'}</button>
               </li>
             )
           })}

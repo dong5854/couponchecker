@@ -1,25 +1,27 @@
 'use client'
 import Card from '@/components/Card'
+import getCoupons from './api/firestore/getCoupons'
 import { NotionQueryResult, queryCoupons } from './api/notion/queryCoupons'
 import { Condition, conditonUnUsed } from './api/notion/queryCouponsCondition'
 import CouponConditionDropDown from '@/components/CouponConditionDropDown'
 import CouponUploadModal from '@/components/CouponUploadModal'
 import { useState, useEffect } from 'react'
+import { Coupon } from './api/firestore/icoupon'
 
 export const dynamic = 'force-dynamic'
 
 export default function Page() {
-  const [couponsResponse, setCouponsResponse] = useState<NotionQueryResult | null>(null)
-  const [condition, setCondition] = useState(conditonUnUsed)
+  const [couponsResponse, setCouponsResponse] = useState<Coupon[] | null>(null)
+  const [isUsed, setIsUsed] = useState(false)
   useEffect(() => {
     const resp = async () => {
-      const resp = await queryCoupons(condition)
+      const resp = await getCoupons({ isUsed })
       setCouponsResponse(resp)
     }
     resp()
-  }, [condition])
-  const updateCondition = (newCondition: Condition) => {
-    setCondition(newCondition)
+  }, [isUsed])
+  const updateUsed = (isUsed: boolean) => {
+    setIsUsed(isUsed)
   }
 
   return (
@@ -34,26 +36,18 @@ export default function Page() {
           </p>
         </div>
         <div className="container py-1">
-          <CouponConditionDropDown initCondition={condition} updateCondition={updateCondition} />
+          <CouponConditionDropDown isUsed={isUsed} updateUsed={updateUsed} />
           <CouponUploadModal />
           <div className="-m-4 flex flex-wrap">
-            {couponsResponse?.results.map((result) => (
+            {couponsResponse?.map((coupon) => (
               <Card
-                key={result.id}
-                pageId={result.id}
-                title={result.properties.name.title[0].plain_text}
-                dueDate={result.properties.expireAt.date.start}
-                imgSrc={
-                  result.properties.image.files[0]?.file.url
-                    ? result.properties.image.files[0]?.file.url
-                    : result.properties.imageUrl.rich_text[0]?.text.content
-                }
-                href={
-                  result.properties.image.files[0]?.file.url
-                    ? result.properties.image.files[0]?.file.url
-                    : result.properties.imageUrl.rich_text[0]?.text.content
-                }
-                isUsed={result.properties.used.checkbox}
+                key={coupon.id}
+                pageId={coupon.id}
+                title={coupon.name}
+                dueDate={coupon.expireAt}
+                imgSrc={coupon.imageUrl}
+                href={coupon.imageUrl}
+                isUsed={coupon.used}
               />
             ))}
           </div>

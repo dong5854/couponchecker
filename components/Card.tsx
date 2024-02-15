@@ -6,7 +6,7 @@ import Modal from './Modal'
 interface CardProps {
   pageId: string
   title: string
-  dueDate: Date
+  dueDate: string
   imgSrc: string
   href: string
   isUsed: boolean
@@ -50,7 +50,7 @@ const Card: React.FC<CardProps> = ({ pageId, title, dueDate, imgSrc, href, isUse
           )}
         </h2>
         <p className="prose mb-3 max-w-none text-gray-500 dark:text-gray-400">
-          사용만료일: {dueDate.toString()}
+          사용만료일: {dueDate}
         </p>
         {href && <Modal pageId={pageId} isUsed={isUsed} />}
       </div>
