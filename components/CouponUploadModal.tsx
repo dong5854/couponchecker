@@ -5,7 +5,8 @@ import TextInput from './TextInput'
 import CouponExpireDatePicker from './CouponExpireDatePicker'
 import FileInput from './FileInput'
 import { UploadFile, UploadFileInterface } from '@/app/api/storage/uploadFile'
-import { uploadCoupon, Properties } from '@/app/api/notion/uploadCoupon'
+import { Coupon } from '@/app/api/firestore/icoupon'
+import uploadCoupon from '@/app/api/firestore/uploadCoupon'
 
 const CouponUploadModal = () => {
   const [uploadWaiting, setUploadWaiting] = useState(false)
@@ -39,13 +40,13 @@ const CouponUploadModal = () => {
 
     UploadFile(uploadFile)
       .then((imagePath) => {
-        const notionUpload: Properties = {
+        const coupon: Coupon = {
           name: name,
           expireAt: expireDate,
           imageUrl: imagePath,
           used: false,
         }
-        uploadCoupon(notionUpload)
+        uploadCoupon(JSON.stringify(coupon).toString())
         window.location.reload()
       })
       .catch((error) => {

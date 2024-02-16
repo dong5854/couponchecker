@@ -1,7 +1,7 @@
 export interface Coupon {
-  id: string
+  id?: string
   name: string
   imageUrl: string
   used: boolean
-  expireAt: string
+  expireAt: Date
 }

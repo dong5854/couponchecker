@@ -1,15 +1,15 @@
 'use server'
 import { app } from '@/lib/firebase/app'
-import { getFirestore, collection, getDocs, query, where, orderBy, and } from 'firebase/firestore'
+import { getFirestore, collection, getDocs, query, where, orderBy } from 'firebase/firestore'
 import { Coupon } from './icoupon'
 
 interface GetCouponsDTO {
   isUsed: boolean
 }
 
-const getCoupons = async (dto: GetCouponsDTO): Promise<Coupon[]> => {
+const getCoupons = async (dto: GetCouponsDTO): Promise<string> => {
   const db = getFirestore(app)
-  const Coupons: Coupon[] = []
+  const coupons: Coupon[] = []
 
   const couponRef = collection(db, 'coupon')
   const q = query(couponRef, where('used', '==', dto.isUsed), orderBy('expire_at', 'asc'))
@@ -20,16 +20,11 @@ const getCoupons = async (dto: GetCouponsDTO): Promise<Coupon[]> => {
       name: coupon.data().name,
       imageUrl: coupon.data().image_url,
       used: coupon.data().used,
-      expireAt: coupon.data().expire_at.toDate().toLocaleDateString('ko-KR', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }),
+      expireAt: coupon.data().expire_at,
     }
-    Coupons.push(couponData)
+    coupons.push(couponData)
   })
-  return Coupons
+  return JSON.stringify(coupons)
 }
 
 export default getCoupons

@@ -1,20 +1,22 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { updateCouponUse } from '@/app/api/notion/updateCouponUse'
+import { Coupon } from '@/app/api/firestore/icoupon'
+import updateCoupon from '@/app/api/firestore/updateCoupon'
 
 interface ModalProps {
-  pageId: string
+  coupon: Coupon
   isUsed: boolean
 }
 
-const Modal: React.FC<ModalProps> = ({ pageId, isUsed }) => {
+const Modal: React.FC<ModalProps> = ({ coupon, isUsed }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [modalIsUsed, setModalIsUsed] = useState(isUsed)
 
   const handleCoupon = useCallback(async () => {
-    await updateCouponUse(pageId)
-  }, [pageId])
+    coupon.used = true
+    await updateCoupon(JSON.stringify(coupon).toString())
+  }, [coupon])
 
   const useCouponHandler = () => {
     setModalIsUsed(true)

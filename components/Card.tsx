@@ -2,57 +2,50 @@ import React from 'react'
 import Image from './Image'
 import Link from './Link'
 import Modal from './Modal'
+import { Coupon } from '@/app/api/firestore/icoupon'
 
 interface CardProps {
-  pageId: string
-  title: string
-  dueDate: string
-  imgSrc: string
-  href: string
-  isUsed: boolean
+  coupon: Coupon
 }
 
-const Card: React.FC<CardProps> = ({ pageId, title, dueDate, imgSrc, href, isUsed }) => (
+const Card: React.FC<CardProps> = ({ coupon }) => (
   <div className="md max-w-[544px] p-4 md:w-1/2">
     <div
       className={`${
-        imgSrc && 'h-full'
+        coupon.imageUrl && 'h-full'
       }  overflow-hidden rounded-md border-2 border-gray-200 border-opacity-60 dark:border-gray-700`}
     >
-      {imgSrc &&
-        (href ? (
-          <Link href={href} aria-label={`Link to ${title}`}>
-            <Image
-              alt={title}
-              src={imgSrc}
-              className="object-cover object-center md:h-36 lg:h-48"
-              width={544}
-              height={306}
-            />
-          </Link>
-        ) : (
+      {coupon.imageUrl && (
+        <Link href={coupon.imageUrl} aria-label={`Link to ${coupon.imageUrl}`}>
           <Image
-            alt={title}
-            src={imgSrc}
+            alt={coupon.name}
+            src={coupon.imageUrl}
             className="object-cover object-center md:h-36 lg:h-48"
             width={544}
             height={306}
           />
-        ))}
+        </Link>
+      )}
       <div className="p-6">
         <h2 className="mb-3 text-2xl font-bold leading-8 tracking-tight">
-          {href ? (
-            <Link href={href} aria-label={`Link to ${title}`}>
-              {title}
+          {coupon.imageUrl ? (
+            <Link href={coupon.imageUrl} aria-label={`Link to ${coupon.name}`}>
+              {coupon.name}
             </Link>
           ) : (
-            title
+            coupon.name
           )}
         </h2>
         <p className="prose mb-3 max-w-none text-gray-500 dark:text-gray-400">
-          사용만료일: {dueDate}
+          사용만료일:{' '}
+          {coupon.expireAt.toLocaleDateString('ko-KR', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
         </p>
-        {href && <Modal pageId={pageId} isUsed={isUsed} />}
+        {coupon.imageUrl && <Modal coupon={coupon} isUsed={coupon.used} />}
       </div>
     </div>
   </div>

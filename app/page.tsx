@@ -1,8 +1,6 @@
 'use client'
 import Card from '@/components/Card'
 import getCoupons from './api/firestore/getCoupons'
-import { NotionQueryResult, queryCoupons } from './api/notion/queryCoupons'
-import { Condition, conditonUnUsed } from './api/notion/queryCouponsCondition'
 import CouponConditionDropDown from '@/components/CouponConditionDropDown'
 import CouponUploadModal from '@/components/CouponUploadModal'
 import { useState, useEffect } from 'react'
@@ -16,7 +14,9 @@ export default function Page() {
   useEffect(() => {
     const resp = async () => {
       const resp = await getCoupons({ isUsed })
-      setCouponsResponse(resp)
+      const coupons: Coupon[] = JSON.parse(resp)
+      coupons.map((coupon) => (coupon.expireAt = new Date(coupon.expireAt)))
+      setCouponsResponse(coupons)
     }
     resp()
   }, [isUsed])
@@ -39,17 +39,7 @@ export default function Page() {
           <CouponConditionDropDown isUsed={isUsed} updateUsed={updateUsed} />
           <CouponUploadModal />
           <div className="-m-4 flex flex-wrap">
-            {couponsResponse?.map((coupon) => (
-              <Card
-                key={coupon.id}
-                pageId={coupon.id}
-                title={coupon.name}
-                dueDate={coupon.expireAt}
-                imgSrc={coupon.imageUrl}
-                href={coupon.imageUrl}
-                isUsed={coupon.used}
-              />
-            ))}
+            {couponsResponse?.map((coupon) => <Card key={coupon.id} coupon={coupon} />)}
           </div>
         </div>
       </div>
